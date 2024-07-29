@@ -1,0 +1,10 @@
+/* scrollbar */
+@import 'simplebar-react/dist/simplebar.min.css';
+
+input::file-selector-button {
+    font-weight: bold;
+    color: dodgerblue;
+    padding: 0.5em;
+    border: thin solid grey;
+    border-radius: 3px;
+  }
