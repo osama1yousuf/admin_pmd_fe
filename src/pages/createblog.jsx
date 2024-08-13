@@ -16,7 +16,7 @@ export default function CreateBlog() {
   const router = useRouter();
   const [heading, setHeading] = useState('');
   const [imageBanner, setImageBanner] = useState(null);
-  // const [imageInner, setImageInner] = useState([]);
+  const [imageInner, setImageInner] = useState(null);
   const [mainContent, setMainContent] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
   const [metaTittle, setMetaTittle] = useState('');
@@ -29,18 +29,12 @@ export default function CreateBlog() {
     if (file) {
       setImageBanner(file);
     }
-    // setImageBanner([]);
-
-    // files.forEach((file) => {
-    //   const reader = new FileReader();
-
-    //   reader.onload = () => {
-    //     if (reader.readyState === 2) {
-    //       setImageBanner((oldArray) => [...oldArray, reader.result]);
-    //     }
-    //   };
-    //   reader.readAsDataURL(file);
-    // });
+  };
+  const handleImageInner = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setImageInner(file);
+    }
   };
 
   const uploadImageOnCloud = async (file) => {
@@ -65,6 +59,7 @@ export default function CreateBlog() {
       const body = {
         name: heading,
         bannerImage: {},
+        innerImage : {},
         mainContent,
         user: JSON.parse(sessionStorage.getItem('user'))?._id,
         category: selectedCategory,
@@ -78,6 +73,21 @@ export default function CreateBlog() {
           const imageResponse = await uploadImageOnCloud(imageBanner); // Await the image upload
           if (imageResponse) {
             body.bannerImage = {
+              public_id: imageResponse?.public_id,
+              url: imageResponse?.secure_url,
+            };
+          }
+        } catch (error) {
+          console.error('Image upload failed', error);
+          return; // Optionally handle the error, e.g., show an alert or toast message
+        }
+      }
+
+      if (imageInner) {
+        try {
+          const imageResponse = await uploadImageOnCloud(imageInner); // Await the image upload
+          if (imageResponse) {
+            body.innerImage = {
               public_id: imageResponse?.public_id,
               url: imageResponse?.secure_url,
             };
@@ -221,10 +231,10 @@ export default function CreateBlog() {
               <Typography variant="h6">Banner Image</Typography>
               <input type="file" onChange={handleImageBanner} />
             </Box>
-            {/* <Box sx={{ padding: '13px 0px' , flexBasis : "47%" }}>
+            <Box sx={{ padding: '13px 0px' , flexBasis : "47%" }}>
               <Typography variant="h6">Innrer Image</Typography>
               <input type="file" onChange={handleImageInner} />
-            </Box> */}
+            </Box> 
           </Box>
         </Box>
         <Box>

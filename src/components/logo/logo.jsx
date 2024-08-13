@@ -42,10 +42,7 @@ const Logo = forwardRef(({ disabledLink = false, sx, ...other }, ref) => {
       }}
       {...other}
     >
-      <img
-        src="https://www.umeesoft.com/assets/umee%20soft%20black-01-Dc1dTgLm.svg"
-        alt="photoURL"
-      />
+      <img src="https://puremdgroup.com/img/logo.png" alt="photoURL" />
     </Box>
   );
 

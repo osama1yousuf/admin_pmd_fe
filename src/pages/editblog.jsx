@@ -18,6 +18,7 @@ export default function EditBlog() {
   const { id } = useParams();
   const [heading, setHeading] = useState('');
   const [imageBanner, setImageBanner] = useState(null);
+  const [imageInner, setImageInner] = useState(null);
   const [mainContent, setMainContent] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
   const [metaTittle, setMetaTittle] = useState('');
@@ -29,6 +30,13 @@ export default function EditBlog() {
     const file = e.target.files[0];
     if (file) {
       setImageBanner(file);
+    }
+  };
+
+  const handleImageInner = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setImageInner(file);
     }
   };
 
@@ -71,6 +79,21 @@ export default function EditBlog() {
                 public_id: imageResponse?.public_id,
                 url: imageResponse?.secure_url,
               },
+            };
+          }
+        } catch (error) {
+          console.error('Image upload failed', error);
+          return; // Optionally handle the error, e.g., show an alert or toast message
+        }
+      }
+
+      if (imageInner) {
+        try {
+          const imageResponse = await uploadImageOnCloud(imageInner); // Await the image upload
+          if (imageResponse) {
+            body.innerImage = {
+              public_id: imageResponse?.public_id,
+              url: imageResponse?.secure_url,
             };
           }
         } catch (error) {
@@ -228,6 +251,10 @@ export default function EditBlog() {
             <Box sx={{ padding: '13px 0px', flexBasis: '47%' }}>
               <Typography variant="h6">Banner Image</Typography>
               <input type="file" onChange={handleImageBanner} />
+            </Box>
+            <Box sx={{ padding: '13px 0px', flexBasis: '47%' }}>
+              <Typography variant="h6">Innrer Image</Typography>
+              <input type="file" onChange={handleImageInner} />
             </Box>
           </Stack>
         </Box>
