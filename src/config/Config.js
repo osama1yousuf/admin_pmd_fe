@@ -5,7 +5,7 @@ const Config = {
   apiUrl: 'https://admin-pmd-be.vercel.app/api/v1',
   uploadPersetCloudinaryKey: 'ltkiriuh',
   cloudinarySecretKey: 'dvxkpxgwm',
-  tinymceKey: 'kf5xlyjmj2a5k9dabj8g1uaq6wxgaidqzyw4qbhjctywa0r8',
+  tinymceKey: 'ohgqs0kh2sxafaffc94sci9xj25bd1xfttjryxs3nxmav0l2',
 };
 
 export default Config;
